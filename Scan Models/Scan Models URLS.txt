@@ -1,0 +1,4 @@
+CT SCAN: https://www.kaggle.com/code/amirtarek74/chest-ct-scan-classification-90-test-acc
+CATARACT: https://www.kaggle.com/code/rizkidesu/katarak
+BRAIN TUMOR: https://www.kaggle.com/datasets/jakeshbohaju/brain-tumor
+X-RAY: https://www.kaggle.com/code/alawdisoft/chest-x-ray-images-pneumonia-cnn
