@@ -49,6 +49,7 @@ class Appointment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('appointments', lazy=True))
 
+
 def create_tables():
     with app.app_context():
         db.create_all()
@@ -102,6 +103,7 @@ with open('static/Data/Testing.csv', newline='') as f:
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    create_tables()
     username = None
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
@@ -360,7 +362,3 @@ def disease_predict():
         return render_template('disease_predict.html',symptoms=symptoms,username=username,chart_data=chart_data)
     return render_template('index.html')
 
-
-if __name__ == '__main__':
-    create_tables()
-    app.run(debug=True)
