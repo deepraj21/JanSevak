@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jansevak</title>
+    <link rel="icon" href="./static/images/heart-pulse-solid.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="{{url_for('index')}}" class="logo"><i class="fas fa-heartbeat"></i> jansevak</a>
+        <nav class="navbar">
+            {% if username %}
+            <a href="" class="disabled">{{username}}</a>
+            <a href="{{url_for('logout')}}">Logout</a>
+            {% else %}
+            <a href="{{url_for('login')}}">Login</a>
+            {% endif %}
+    
+        </nav>
+    
+        <div id="menu-btn" class="fas fa-bars"></div>
+    
+    </header>
+
+    {% if user_appointments %}
+    <section class="about" id="about">
+        <h1 class="heading" style="margin-top: 8rem;">User <span> Profile </span></h1>
+        <div class="row">
+            <div class="image" >
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/user-3711850-3105265.png?f=webp" alt="">
+    
+            </div>
+            <div class="content">
+                <h3>Username: <span style="font-size: 2.5rem;">{{username}}</span></h3>
+                {% for appointment in user_appointments %}
+                {% if loop.first %}
+                <h3>Full name: <span style="font-size: 2.5rem;">{{appointment.name}}</span></h3>
+                <h3>Age: <span style="font-size: 2.5rem;">{{appointment.age}}</span></h3>
+                <h3>Blood Group: <span style="font-size: 2.5rem;">{{appointment.blood_group}}</span></h3>
+                <h3>Phone Number: <span style="font-size: 2.5rem;">{{appointment.phone_number}}</span></h3>
+                <h3>Email: <span style="font-size: 2.5rem;">{{appointment.email}}</span></h3>
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    
+    <h1 class="heading" style="margin-top: 100px;">Your <span>Appointments:</span></h1>
+    <section class="book" id="book">
+    
+        <div class="glass-row-book">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Blood Group</th>
+                        <th>Time Slot</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Type of Doctor</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in user_appointments %}
+                    <tr>
+                        <td>{{ appointment.name }}</td>
+                        <td>{{ appointment.age }}</td>
+                        <td>{{ appointment.blood_group }}</td>
+                        <td>{{ appointment.time_slot }}</td>
+                        <td>{{ appointment.phone_number }}</td>
+                        <td>{{ appointment.email }}</td>
+                        <td>{{ appointment.type_of_doctor }}</td>
+                        <td
+                            style="color: {% if appointment.status == 'Approved' %}#16a085{% elif appointment.status == 'Rejected' %}red{% else %}white{% endif %}">
+                            {{ appointment.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    
+        </div>
+    </section>
+    {% else %}
+    <p>No appointments found.</p>
+    {% endif %}
+
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="{{url_for('index')}}#home"><i class="fas fa-chevron-right"></i> home</a>
+                <a href="{{url_for('index')}}#services"><i class="fas fa-chevron-right"></i> services</a>
+                <a href="{{url_for('index')}}#book"><i class="fas fa-chevron-right"></i>book</a>
+                <a href="{{url_for('index')}}#scans"><i class="fas fa-chevron-right"></i> scans</a>
+                <a href="{{url_for('index')}}#blogs"><i class="fas fa-chevron-right"></i> blogs</a>
+                <a href="{{url_for('index')}}#about"><i class="fas fa-chevron-right"></i> about</a>
+    
+    
+            </div>
+            <div class="box">
+                <h3>our services </h3>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+    
+    
+            </div>
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="" class="disabled"><i class="fas fa-phone"></i>+91 70441 35575</a>
+                <a href="" class="disabled"><i class="fas fa-phone"></i> +91 62916 53332</a>
+                <a href="mailto:21051302@kiit.ac.in"><i class="fas fa-envelope"></i>21051302@kiit.ac.in</a>
+                <a href="mailto:21051706@kiit.ac.in"><i class="fas fa-envelope"></i>21051706@kiit.ac.in</a>
+                <a href="" class="disabled"><i class="fas fa-map-marker-alt"></i>WB, INDIA</a>
+            </div>
+            <div class="box">
+                <h3>follow us</h3>
+                <a href="https://www.linkedin.com/in/abhishek-mallick09/"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://www.linkedin.com/in/deepraj-bera-b64996231/"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://github.com/Abhishek-Mallick"><i class="fab fa-github"></i>Github</a>
+                <a href="https://github.com/deepraj21"><i class="fab fa-github"></i>Github</a>
+            </div>
+        </div>
+    
+        <div class="credit">made with 💚 | Jansevak @ 2023</div>
+    </section>
+    <script src="./static/js/script.js"></script>
+</body>
+</html>

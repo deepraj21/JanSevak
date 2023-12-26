@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jansevak</title>
+    <link rel="icon" href="./static/images/heart-pulse-solid.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./static/css/style.css">
+    <style>
+        input[type="file"] {
+            background-color: #e5e7eb00;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <a href="{{url_for('index')}}" class="logo"><i class="fas fa-heartbeat"></i> jansevak</a>
+        <nav class="navbar">
+            {% if username %}
+            <a href="{{url_for('index')}}#home">Home</a>
+            <a href="{{url_for('index')}}#services">services</a>
+            <a href="{{url_for('index')}}#book">Book</a>
+            <a href="{{url_for('index')}}#scans">Scans</a>
+            <a href="{{url_for('index')}}#blogs">Blogs</a>
+            <a href="{{url_for('index')}}#about">about</a>
+            <a href="{{url_for('profile')}}"><span class="fas fa-user"></span></a>
+            {% else %}
+            <a href="{{url_for('login')}}">Login</a>
+            {% endif %}
+        </nav>
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+    </header>
+
+    <h1 class="heading" style="margin-top: 8rem;"> <span>Brain </span> Tumor Detection</h1>
+    <section class="home" id="home" style="margin-top: -6rem;">
+        <div class="image">
+            <img src="../static/images/brain-chemistry-animate.svg" alt="">
+
+        </div>
+        <div class="content">
+            <p>A brain tumor is an abnormal growth of cells in the brain. It can be either cancerous (malignant) or
+                non-cancerous
+                (benign). Brain tumors can arise from the brain itself (primary tumors) or spread to the brain from
+                other parts of the
+                body (secondary tumors or metastatic tumors).</p>
+            <p>The treatment of brain tumors depends on several factors, including the type, location, size, and grade
+                of the tumor, as
+                well as the overall health of the patient. The main treatment options for brain tumors include:</p>
+            <p style="font-size: 1.5rem;">⭕ <span style="color: aquamarine;">Surgery: </span> Surgical removal of the
+                tumor is often the first-line treatment when possible. The surgeon aims to remove
+                as much of the tumor as safely possible while preserving brain function.<br>
+
+                ⭕ <span style="color: aquamarine;">Radiation Therapy: </span> Radiation therapy uses high-energy beams
+                to kill or shrink tumor cells. It may be used before
+                or after surgery or as the primary treatment for inoperable tumors.<br>
+
+                ⭕ <span style="color: aquamarine;">Chemotherapy: </span> Chemotherapy involves the use of drugs to kill
+                cancer cells. It can be administered orally or
+                intravenously and may be used alone or in combination with surgery and radiation therapy.<br>
+
+                ⭕ <span style="color: aquamarine;">Targeted Therapy: </span> Targeted therapy uses drugs that
+                specifically target certain molecules or pathways involved in
+                the growth and survival of cancer cells. These therapies can be effective in treating certain types of
+                brain tumors.<br>
+
+                ⭕ <span style="color: aquamarine;">Immunotherapy: </span> Immunotherapy works by stimulating the body's
+                immune system to recognize and attack cancer cells.
+                It is a rapidly evolving field, and some immunotherapies have shown promising results in treating
+                certain types of brain
+                tumors.<br>
+
+                ⭕ <span style="color: aquamarine;">Supportive Care: </span> In addition to the specific treatments,
+                supportive care is important to manage symptoms, provide
+                pain relief, and improve the quality of life of patients with brain tumors. This may include
+                medications, physical
+                therapy, occupational therapy, and psychological support.</p>
+        </div>
+    </section>
+
+    <h1 class="heading" style="margin-bottom: -10rem;"> <span>Upload</span> to predict</h1>
+
+    <section class="book" id="book">
+
+        <div class="glass-row" style="margin-top:100px;">
+            <!-- <div class="image"></div> -->
+            <form action="{{url_for('braintumor')}}" method="post" enctype="multipart/form-data">
+                <a href="{{url_for('index')}}" class="logo"><i class="fas fa-heartbeat"></i> Jansevak</a><br><br>
+                <input class="box" type="file" name="file" accept=".jpg, .jpeg, .png" required>
+
+                <input type="submit" value="Predict" class="btn">
+                <p style="color: white; font-size: 1.3rem; margin-top: 2rem;">By continuing, you agree to Jansevak's
+                    <a style="color: #16a085;" href="{{url_for('policy')}}">Terms of Service</a> Opens a new tab and
+                    acknowledge you've read our Privacy
+                    Policy. Notice at collection.
+                </p>
+
+
+            </form>
+
+        </div>
+    </section>
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="{{url_for('index')}}#home"><i class="fas fa-chevron-right"></i> home</a>
+                <a href="{{url_for('index')}}#services"><i class="fas fa-chevron-right"></i> services</a>
+                <a href="{{url_for('index')}}#book"><i class="fas fa-chevron-right"></i>book</a>
+                <a href="{{url_for('index')}}#scans"><i class="fas fa-chevron-right"></i> scans</a>
+                <a href="{{url_for('index')}}#blogs"><i class="fas fa-chevron-right"></i> blogs</a>
+                <a href="{{url_for('index')}}#about"><i class="fas fa-chevron-right"></i> about</a>
+
+
+            </div>
+            <div class="box">
+                <h3>our services </h3>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+
+
+            </div>
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="" class="disabled"><i class="fas fa-phone"></i>+91 70441 35575</a>
+                <a href="" class="disabled"><i class="fas fa-phone"></i> +91 62916 53332</a>
+                <a href="mailto:21051302@kiit.ac.in"><i class="fas fa-envelope"></i>21051302@kiit.ac.in</a>
+                <a href="mailto:21051706@kiit.ac.in"><i class="fas fa-envelope"></i>21051706@kiit.ac.in</a>
+                <a href="" class="disabled"><i class="fas fa-map-marker-alt"></i>WB, INDIA</a>
+            </div>
+            <div class="box">
+                <h3>follow us</h3>
+                <a href="https://www.linkedin.com/in/abhishek-mallick09/"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://www.linkedin.com/in/deepraj-bera-b64996231/"><i
+                        class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://github.com/Abhishek-Mallick"><i class="fab fa-github"></i>Github</a>
+                <a href="https://github.com/deepraj21"><i class="fab fa-github"></i>Github</a>
+            </div>
+        </div>
+
+        <div class="credit">made with 💚 | Jansevak @ 2023</div>
+    </section>
+    <script src="./static/js/script.js"></script>
+</body>
+
+</html>
