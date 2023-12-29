@@ -16,6 +16,7 @@ import os
 import csv
 
 app = Flask(__name__)
+mail = Mail(app)
 
 app.secret_key = 'MYSECRETKEY'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -33,6 +34,7 @@ db = SQLAlchemy(app)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), nullable=False)
     password = db.Column(db.String(120), nullable=False)
     type_of_doctor = db.Column(db.String(50))
 
@@ -100,6 +102,9 @@ with open('static/Data/Testing.csv', newline='') as f:
         symptoms = next(reader)
         symptoms = symptoms[:len(symptoms)-1]
 
+# ============================================================ routes ============================================================ 
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     username = None
@@ -123,16 +128,18 @@ def profile():
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
         username = user.username
+        Email = user.email 
         user_appointments = user.appointments
-        return render_template('patient-profile.html', username=username, user_appointments=user_appointments)
+        return render_template('patient-profile.html', username=username,Email=Email, user_appointments=user_appointments)
     return render_template('index')
 
 @app.route('/patient-register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
-        user = User(username=username, password=password)
+        user = User(username=username,email=email, password=password)
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.id
@@ -143,9 +150,10 @@ def register():
 def doctor_register():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
         type_of_doctor = request.form['type_of_doctor']
-        user = User(username=username, password=password, type_of_doctor=type_of_doctor)
+        user = User(username=username,email=email, password=password, type_of_doctor=type_of_doctor)
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.id
@@ -205,10 +213,10 @@ def book_appointment():
         db.session.commit()
 
         # Notify the doctor via email
-        # doctor_email = User.query.filter_by(type_of_doctor=type_of_doctor).first().username
-        # subject = 'New Appointment Request'
-        # body = f'Hello Doctor,\n\nYou have a new appointment request. Please log in to the system to approve or reject it.'
-        # send_mail(subject, doctor_email, body)
+        doctor_email = User.query.filter_by(type_of_doctor=type_of_doctor).first().username
+        subject = 'New Appointment Request'
+        body = f'Hello Doctor,\n\nYou have a new appointment request. Please log in to the system to approve or reject it.'
+        send_mail(subject, doctor_email, body)
 
         return redirect(url_for('index'))
 
@@ -229,9 +237,9 @@ def approve_appointment(appointment_id):
     db.session.commit()
 
     # Notify the patient via email
-    # subject = 'Appointment Approved'
-    # body = f'Hello {appointment.name},\n\nYour appointment has been approved. Please log in to the system to view the details.'
-    # send_mail(subject, appointment.email, body)
+    subject = 'Appointment Approved'
+    body = f'Hello {appointment.name},\n\nYour appointment has been approved. Please log in to the system to view the details.'
+    send_mail(subject, appointment.email, body)
 
     return redirect(url_for('index'))
 
@@ -284,13 +292,24 @@ def admin():
         return render_template('admin.html',username=username)
     return render_template('index.html')
 
-# ==================== scans ==================== 
+@app.route('/videocall')
+def videocall():
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        username = user.username
+        return render_template('videocall.html',username=username)
+    
+    return render_template('index.html')
+
+
+# ============================================================ scans ============================================================ 
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'jpg', 'jpeg', 'png'}
 
 # Load the trained model
-# model = tf.keras.models.load_model('./static/Data/brain_tumor.h5')
+model = tf.keras.models.load_model('./static/Data/brain_tumor.h5')
 
 # def prediction(YOUR_IMAGE_PATH):
     img = image.load_img(YOUR_IMAGE_PATH, target_size=(150, 150))
@@ -358,6 +377,25 @@ def disease_predict():
             return render_template('disease_predict.html',symptoms=symptoms,disease=disease, chart_data=chart_data,confidence_score=confidence_score,username=username)
             
         return render_template('disease_predict.html',symptoms=symptoms,username=username,chart_data=chart_data)
+    return render_template('index.html')
+
+@app.route('/lung')
+def lung():
+    username = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        username = user.username
+        return render_template('lung.html',username=username)
+    else:
+        return render_template('index.html')
+
+@app.route('/cataract')
+def cataract():
+    username = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        username = user.username
+        return render_template('cataract.html',username=username)
     return render_template('index.html')
 
 
