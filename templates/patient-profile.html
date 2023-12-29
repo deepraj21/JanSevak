@@ -91,7 +91,19 @@
         </div>
     </section>
     {% else %}
-    <p>No appointments found.</p>
+    <section class="about" id="about">
+        <h1 class="heading" style="margin-top: 8rem;">User <span> Profile </span></h1>
+        <div class="row">
+            <div class="image">
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/user-3711850-3105265.png?f=webp" alt="">
+    
+            </div>
+            <div class="content">
+                <h3>Username: <span style="font-size: 2.5rem;">{{username}}</span></h3>
+                <h3>Email: <span style="font-size: 2.5rem;">{{Email}}</span></h3>
+            </div>
+        </div>
+    </section>
     {% endif %}
 
     <section class="footer">
