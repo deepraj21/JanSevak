@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jansevak</title>
+    <link rel="icon" href="./static/images/heart-pulse-solid.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./static/css/style.css">
+    <style>
+        .icon {
+            padding: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+        }
+
+        .icon a {
+            font-size: 1.4rem;
+            color: var(--light-color);
+
+        }
+
+        .icon a:hover {
+
+            color: var(--green);
+
+        }
+
+        .icon a i {
+            padding-right: .5rem;
+            color: var(--green);
+
+        }
+
+        .content {
+            padding-top: 1rem;
+
+        }
+
+        .content h3 {
+            color: var(--black);
+            font-size: 3rem;
+
+        }
+
+        .content p {
+            color: var(--light-color);
+            font-size: 1.5rem;
+            line-height: 1.8;
+            padding: 1rem 0;
+
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="{{url_for('index')}}" class="logo"><i class="fas fa-heartbeat"></i> jansevak</a>
+        <nav class="navbar">
+            {% if username %}
+            <a href="{{url_for('index')}}#home">Home</a>
+            <a href="{{url_for('index')}}#services">services</a>
+            <a href="{{url_for('index')}}#book">Book</a>
+            <a href="{{url_for('index')}}#scans">Scans</a>
+            <a href="{{url_for('index')}}#blogs">Blogs</a>
+            <a href="{{url_for('index')}}#about">about</a>
+            <a href="{{url_for('profile')}}"><span class="fas fa-user"></span></a>
+            {% else %}
+            <a href="{{url_for('login')}}">Login</a>
+            {% endif %}
+        </nav>
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+    </header>
+
+    <section class="about" id="about">
+        <h1 class="heading" style="margin-top: 8rem;">Transforming Healthcare: <span>The Human Touch of AI and
+                Telemedicine </span></h1>
+        <div class="icon">
+            <a href="" class="disabled"><i class="fas fa-calendar"></i> 25th dec, 2023</a>
+            <a href="{{url_for('admin')}}"><i class="fas fa-user"></i> by admin</a>
+
+        </div>
+        <div class="row">
+            <div class="image">
+                <img src="https://cdni.iconscout.com/illustration/premium/thumb/health-checkup-5629721-4695022.png"
+                    alt="">
+            </div>
+            <div class="content">
+                <p>In the fast-paced world of healthcare, technology has emerged as a guiding light, leading us towards
+                    more accessible,
+                    efficient, and personalized care. Among the groundbreaking innovations, the amalgamation of
+                    Artificial Intelligence (AI)
+                    and Telemedicine stands out as a beacon of hope, providing a bridge between advanced technology and
+                    compassionate
+                    healthcare delivery.</p>
+                <h3 style="font-size: 1.8rem;">Embracing Change: The Rise of AI in Healthcare</h3>
+                <p>Artificial Intelligence, once confined to the realms of science fiction, has now become an integral
+                    part of our daily
+                    lives, and healthcare is no exception. AI's ability to analyze vast datasets and recognize patterns
+                    has revolutionized
+                    diagnostics and treatment plans, offering a level of precision that was previously unimaginable.</p>
+                <p>In the diagnostic realm, AI algorithms excel at sifting through medical records, lab results, and
+                    imaging data with
+                    lightning speed. This not only expedites the diagnosis process but also ensures accuracy, reducing
+                    the margin of error
+                    and improving patient outcomes.</p>
+
+            </div>
+        </div>
+        <div class="content">
+            <h3 style="font-size: 1.8rem;">Telemedicine: Bridging Gaps and Bringing Care Closer</h3>
+            <p>Telemedicine, on the other hand, breaks down geographical barriers, connecting patients with healthcare
+                providers
+                seamlessly. Especially in the wake of global events that have emphasized the need for remote care,
+                telemedicine has
+                emerged as a vital tool in ensuring continuous healthcare access.</p>
+            <p>Imagine a scenario where a patient in a remote village can consult with a specialist located hundreds of
+                miles away
+                without the need for extensive travel. Telemedicine makes this a reality, providing timely and
+                convenient healthcare
+                solutions, particularly for those in underserved or rural areas.</p>
+            <h3 style="font-size: 1.8rem;">The Synergy of AI and Telemedicine: Personalizing Healthcare</h3>
+            <p>The magic happens when AI and Telemedicine join forces. The combination allows for the creation of
+                personalized
+                healthcare experiences tailored to individual needs. AI algorithms can analyze a patient's medical
+                history, lifestyle,
+                and genetic makeup to provide recommendations and treatment plans that are not only effective but also
+                considerate of
+                the patient's unique circumstances.</p>
+            <p>From chronic disease management to mental health support, the synergy of AI and Telemedicine is enhancing
+                preventive
+                care and empowering patients to actively participate in their health journey.</p>
+        </div>
+        <div class="row">
+
+            <div class="content">
+
+                <h3 style="font-size: 1.8rem;">Looking Ahead: A Holistic Approach to Healthcare</h3>
+                <p>As we navigate the transformative journey of AI and Telemedicine in healthcare, it's crucial to
+                    maintain a holistic
+                    perspective. The future of healthcare lies in a seamless integration of cutting-edge technology and
+                    human compassion.
+                    Let's embrace these innovations not as replacements but as catalysts for a more interconnected,
+                    accessible, and humane
+                    healthcare ecosystem—one where the human touch remains at the forefront of healing. In doing so, we
+                    pave the way for a
+                    healthier and more compassionate future for all.</p>
+
+
+            </div>
+            <div class="image">
+                <img src="https://cdni.iconscout.com/illustration/premium/thumb/online-doctor-consultation-4622109-3832640.png"
+                    alt="">
+
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="{{url_for('index')}}#home"><i class="fas fa-chevron-right"></i> home</a>
+                <a href="{{url_for('index')}}#services"><i class="fas fa-chevron-right"></i> services</a>
+                <a href="{{url_for('index')}}#book"><i class="fas fa-chevron-right"></i>book</a>
+                <a href="{{url_for('index')}}#scans"><i class="fas fa-chevron-right"></i> scans</a>
+                <a href="{{url_for('index')}}#blogs"><i class="fas fa-chevron-right"></i> blogs</a>
+                <a href="{{url_for('index')}}#about"><i class="fas fa-chevron-right"></i> about</a>
+            </div>
+            <div class="box">
+                <h3>our services </h3>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+
+
+            </div>
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="" class="disabled"><i class="fas fa-phone"></i>+91 70441 35575</a>
+                <a href="" class="disabled"><i class="fas fa-phone"></i> +91 62916 53332</a>
+                <a href="mailto:21051302@kiit.ac.in"><i class="fas fa-envelope"></i>21051302@kiit.ac.in</a>
+                <a href="mailto:21051706@kiit.ac.in"><i class="fas fa-envelope"></i>21051706@kiit.ac.in</a>
+                <a href="" class="disabled"><i class="fas fa-map-marker-alt"></i>WB, INDIA</a>
+            </div>
+            <div class="box">
+                <h3>follow us</h3>
+                <a href="https://www.linkedin.com/in/abhishek-mallick09/"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://www.linkedin.com/in/deepraj-bera-b64996231/"><i
+                        class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://github.com/Abhishek-Mallick"><i class="fab fa-github"></i>Github</a>
+                <a href="https://github.com/deepraj21"><i class="fab fa-github"></i>Github</a>
+            </div>
+        </div>
+
+        <div class="credit">made with 💚 | Jansevak @ 2023</div>
+    </section>
+    <script src="../static/js/script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jansevak</title>
+    <link rel="icon" href="./static/images/heart-pulse-solid.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./static/css/style.css">
+    <style>
+        .icon {
+            padding: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+        }
+
+        .icon a {
+            font-size: 1.4rem;
+            color: var(--light-color);
+
+        }
+
+        .icon a:hover {
+
+            color: var(--green);
+
+        }
+
+        .icon a i {
+            padding-right: .5rem;
+            color: var(--green);
+
+        }
+
+        .content {
+            padding-top: 1rem;
+
+        }
+
+        .content h3 {
+            color: var(--black);
+            font-size: 3rem;
+
+        }
+
+        .content p {
+            color: var(--light-color);
+            font-size: 1.5rem;
+            line-height: 1.8;
+            padding: 1rem 0;
+
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="{{url_for('index')}}" class="logo"><i class="fas fa-heartbeat"></i> jansevak</a>
+        <nav class="navbar">
+            {% if username %}
+            <a href="{{url_for('index')}}#home">Home</a>
+            <a href="{{url_for('index')}}#services">services</a>
+            <a href="{{url_for('index')}}#book">Book</a>
+            <a href="{{url_for('index')}}#scans">Scans</a>
+            <a href="{{url_for('index')}}#blogs">Blogs</a>
+            <a href="{{url_for('index')}}#about">about</a>
+            <a href="{{url_for('profile')}}"><span class="fas fa-user"></span></a>
+            {% else %}
+            <a href="{{url_for('login')}}">Login</a>
+            {% endif %}
+        </nav>
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+    </header>
+
+    <section class="about" id="about">
+        <h1 class="heading" style="margin-top: 8rem;">"Playing for Keeps: <span> The Importance of Games in Maintaining Physical and Mental Health </span>"</h1>
+        <div class="icon">
+            <a href="" class="disabled"><i class="fas fa-calendar"></i> 28th dec, 2023</a>
+            <a href="{{url_for('admin')}}"><i class="fas fa-user"></i> by admin</a>
+
+        </div>
+        <div class="row">
+            <div class="image">
+                <img src="https://cdni.iconscout.com/illustration/premium/thumb/man-doing-exercise-with-dumbells-4075152-3374986.png?f=webp"
+                    alt="">
+            </div>
+            <div class="content">
+                <h3 style="font-size: 1.8rem;">Introduction:</h3>
+                <p style="font-size: 1.8rem;">In a world that often seems too fast-paced and demanding, the significance of games in promoting health is often
+                underestimated. Beyond mere entertainment, games, whether they be sports, board games, or video games, play a pivotal
+                role in maintaining both physical and mental well-being. In this blog, we'll delve into the diverse ways in which games
+                contribute to a healthier lifestyle and highlight their positive impact on individuals of all ages.</p>
+            
+            
+            </div>
+        </div>
+        <div class="content">
+            <h3 style="font-size: 2.2rem;">- Section 1: Physical Health Benefits of Games</h3>
+            <h3 style="font-size: 1.8rem;">A. Promoting Physical Activity:</h3>
+            <p>1. Sports and Outdoor Games: Engaging in sports or outdoor games provides an excellent avenue for physical exercise.
+            Activities like soccer, basketball, or even a friendly game of frisbee get the heart pumping, improving cardiovascular
+            health.</p>
+            <p>2. Indoor Activities: Even indoor games, such as table tennis or dance-based video games, offer a fun and effective way to
+            stay physically active, especially during inclement weather.</p>
+            <h3 style="font-size: 1.8rem;">B. Enhancing Motor Skills:</h3>
+            <p>1. Coordination and Reflexes: Many games, whether they involve catching a ball, hitting targets, or navigating a virtual
+            world, contribute to the development and enhancement of motor skills and hand-eye coordination.</p>
+            <p>2. Balance and Agility: Sports like gymnastics, yoga, or certain video games require balance and agility, fostering the
+            development of these crucial physical attributes.</p>
+            <h3 style="font-size: 2.2rem;">- Section 2: Mental Health Benefits of Games</h3>
+            <h3 style="font-size: 1.8rem;">A. Cognitive Stimulation:</h3>
+
+            <p>1. Strategic Thinking: Games often require strategic thinking, whether it's planning moves in a board game or making
+            decisions in a video game. This stimulates the brain and enhances problem-solving skills.</p>
+            <p>2. Memory Improvement: Many games, especially memory-based card games or puzzle games, help in sharpening memory and
+            cognitive function.</p>
+
+            <h3 style="font-size: 1.8rem;">B. Stress Relief and Relaxation:</h3>
+            <p>1. Mindfulness in Gaming: Immersive and engaging games can provide an escape from the stresses of daily life, promoting
+            mindfulness and relaxation.</p>
+            <p>2. Social Interaction: Multiplayer games, whether online or offline, offer a social outlet that can reduce feelings of
+            loneliness and stress, contributing to overall mental well-being.</p>
+            <h3 style="font-size: 2.2rem;">- Section 3: Social and Emotional Well-being</h3>
+            <h3 style="font-size: 1.8rem;">A. Building Social Bonds:</h3>
+
+            <p>1. Team Sports: Engaging in team sports fosters a sense of camaraderie and teamwork, promoting positive social
+            interactions.</p>
+            <p>2. Multiplayer Games: Online or local multiplayer games provide opportunities for socialization and can strengthen existing
+            friendships or create new connections.</p>
+            <h3 style="font-size: 1.8rem;">B. Boosting Confidence and Self-Esteem:</h3>
+            <p>1. Achievement in Games: Successfully completing levels, winning matches, or achieving in-game goals can boost confidence
+            and provide a sense of accomplishment.</p>
+            <p>2. Learning Through Failure: Games often involve overcoming challenges and setbacks, teaching resilience and perseverance,
+            valuable skills that carry over into real-life situations.</p>
+
+            <h3 style="font-size: 2.2rem;">- Section 4: Age-Appropriate Games for Health</h3>
+            <h3 style="font-size: 1.8rem;">A. Children and Adolescents:</h3>
+            
+            <p>1. Outdoor Play: Encouraging children to engage in outdoor games promotes physical development, social skills, and a
+            lifelong love for physical activity.</p>
+            <p>2. Educational Games: Incorporating educational video games can make learning enjoyable, combining entertainment with
+            cognitive development.</p>
+            <h3 style="font-size: 1.8rem;">B. Adults:</h3>
+            <p>1. Sports and Recreation: Participating in sports leagues or recreational activities helps maintain physical fitness and
+            provides opportunities for social interaction.</p>
+            <p>2. Mindfulness Games: Activities such as yoga, meditation, or puzzle games can contribute to stress relief and mental
+            well-being.</p>
+        </div>
+        <div class="row">
+
+            <div class="content">
+
+                <h3 style="font-size: 2.2em;">- Conclusion:</h3>
+            
+                <p style="font-size: 1.8em;">In the grand scheme of promoting a healthy lifestyle, games are not just a pastime; they are a powerful tool for
+                maintaining physical fitness, stimulating mental faculties, and fostering social connections. Whether it's the thrill of
+                a competitive sports match, the strategy of a board game, or the immersive experience of a video game, the importance of
+                games in contributing to a balanced and fulfilling life cannot be overstated. So, let's play for keeps and embrace the
+                many health benefits that games bring to our lives.</p>
+                
+              
+
+            </div>
+            <div class="image">
+                <img src="https://cdni.iconscout.com/illustration/premium/thumb/couple-doing-morning-exercise-together-7807648-6247511.png?f=webp" alt="">
+
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="{{url_for('index')}}#home"><i class="fas fa-chevron-right"></i> home</a>
+                <a href="{{url_for('index')}}#services"><i class="fas fa-chevron-right"></i> services</a>
+                <a href="{{url_for('index')}}#book"><i class="fas fa-chevron-right"></i>book</a>
+                <a href="{{url_for('index')}}#scans"><i class="fas fa-chevron-right"></i> scans</a>
+                <a href="{{url_for('index')}}#blogs"><i class="fas fa-chevron-right"></i> blogs</a>
+                <a href="{{url_for('index')}}#about"><i class="fas fa-chevron-right"></i> about</a>
+            </div>
+            <div class="box">
+                <h3>our services </h3>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+
+
+            </div>
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="" class="disabled"><i class="fas fa-phone"></i>+91 70441 35575</a>
+                <a href="" class="disabled"><i class="fas fa-phone"></i> +91 62916 53332</a>
+                <a href="mailto:21051302@kiit.ac.in"><i class="fas fa-envelope"></i>21051302@kiit.ac.in</a>
+                <a href="mailto:21051706@kiit.ac.in"><i class="fas fa-envelope"></i>21051706@kiit.ac.in</a>
+                <a href="" class="disabled"><i class="fas fa-map-marker-alt"></i>WB, INDIA</a>
+            </div>
+            <div class="box">
+                <h3>follow us</h3>
+                <a href="https://www.linkedin.com/in/abhishek-mallick09/"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://www.linkedin.com/in/deepraj-bera-b64996231/"><i
+                        class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://github.com/Abhishek-Mallick"><i class="fab fa-github"></i>Github</a>
+                <a href="https://github.com/deepraj21"><i class="fab fa-github"></i>Github</a>
+            </div>
+        </div>
+
+        <div class="credit">made with 💚 | Jansevak @ 2023</div>
+    </section>
+    <script src="../static/js/script.js"></script>
+
+</body>
+
+</html>

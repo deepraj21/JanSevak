@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jansevak</title>
+    <link rel="icon" href="./static/images/heart-pulse-solid.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./static/css/style.css">
+    <style>
+        .prediction-form {
+            flex: 1 1 45rem;
+            text-align: center;
+            padding: 2rem;
+            border-radius: .5rem;
+        }
+
+        .prediction-form .box {
+            width: 100%;
+            margin: .7rem 0;
+            border-radius: .5rem;
+            border: var(--border);
+            font-size: 1.6rem;
+            color: var(--black);
+            text-transform: none;
+            padding: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="{{url_for('index')}}" class="logo"><i class="fas fa-heartbeat"></i> jansevak</a>
+        <nav class="navbar">
+            {% if username %}
+            <a href="{{url_for('index')}}#home">Home</a>
+            <a href="{{url_for('index')}}#services">services</a>
+            <a href="{{url_for('index')}}#book">Book</a>
+            <a href="{{url_for('index')}}#scans">Scans</a>
+            <a href="{{url_for('index')}}#blogs">Blogs</a>
+            <a href="{{url_for('index')}}#about">about</a>
+            <a href="{{url_for('profile')}}"><span class="fas fa-user"></span></a>
+            {% else %}
+            <a href="{{url_for('login')}}">Login</a>
+            {% endif %}
+        </nav>
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+    </header>
+    <h1 class="heading" style="margin-bottom: -10rem; margin-top: 8rem;"> <span>Brain Tumor </span> Detection</h1>
+    <section class="book" id="book">
+
+        <div class="glass-row" style="margin-top:100px;">
+            <div class="prediction-form">
+                <a href="{{url_for('index')}}" class="logo"><i class="fas fa-heartbeat"></i> Jansevak</a><br><br>
+
+                <div class="box">
+                    <div class="label" id="label-container"></div>
+                    <input class="file-input" type="file" id="file" accept="image/*" hidden>
+
+                    <div id="label-container"></div>
+                    <div class="img-area" data-img="">
+                        <i class="fa-solid fa-upload"></i>
+                        <h3>Upload Image</h3>
+                        <p>Image size must be less than <span>2MB</span></p>
+                    </div>
+                    <button class="select-image btn" style="background-color: rgba(255, 255, 255, 0);">Select
+                        Image</button>
+                </div>
+                <p style="color: white; font-size: 1.3rem; margin-top: 2rem;">By continuing, you agree to Jansevak's
+                    <a style="color: #16a085;" href="{{url_for('policy')}}">Terms of Service</a> Opens a new tab and
+                    acknowledge you've read our Privacy
+                    Policy. Notice at collection.
+                </p>
+            </div>
+
+        </div>
+    </section>
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="{{url_for('index')}}#home"><i class="fas fa-chevron-right"></i> home</a>
+                <a href="{{url_for('index')}}#services"><i class="fas fa-chevron-right"></i> services</a>
+                <a href="{{url_for('index')}}#book"><i class="fas fa-chevron-right"></i>book</a>
+                <a href="{{url_for('index')}}#scans"><i class="fas fa-chevron-right"></i> scans</a>
+                <a href="{{url_for('index')}}#blogs"><i class="fas fa-chevron-right"></i> blogs</a>
+                <a href="{{url_for('index')}}#about"><i class="fas fa-chevron-right"></i> about</a>
+
+
+            </div>
+            <div class="box">
+                <h3>our services </h3>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+                <a href=""><i class="fas fa-chevron-right"></i> Chatbot</a>
+
+
+            </div>
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="" class="disabled"><i class="fas fa-phone"></i>+91 70441 35575</a>
+                <a href="" class="disabled"><i class="fas fa-phone"></i> +91 62916 53332</a>
+                <a href="mailto:21051302@kiit.ac.in"><i class="fas fa-envelope"></i>21051302@kiit.ac.in</a>
+                <a href="mailto:21051706@kiit.ac.in"><i class="fas fa-envelope"></i>21051706@kiit.ac.in</a>
+                <a href="" class="disabled"><i class="fas fa-map-marker-alt"></i>WB, INDIA</a>
+            </div>
+            <div class="box">
+                <h3>follow us</h3>
+                <a href="https://www.linkedin.com/in/abhishek-mallick09/"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://www.linkedin.com/in/deepraj-bera-b64996231/"><i
+                        class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://github.com/Abhishek-Mallick"><i class="fab fa-github"></i>Github</a>
+                <a href="https://github.com/deepraj21"><i class="fab fa-github"></i>Github</a>
+            </div>
+        </div>
+
+        <div class="credit">made with 💚 | Jansevak @ 2023</div>
+    </section>
+    <script src="./static/js/script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script>
+        const selectImage = document.querySelector(".select-image");
+        const inputFile = document.querySelector("#file");
+        const imgArea = document.querySelector(".img-area");
+
+        const URL = "https://teachablemachine.withgoogle.com/models/xr97Ebrkv/"; // Replace with the URL where the model and metadata files are located
+        let model, labelContainer, maxPredictions;
+
+        // Load the model and metadata files
+        async function init() {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+
+            try {
+                model = await tmImage.load(modelURL, metadataURL);
+            } catch (e) {
+                console.error("Error loading the model:", e);
+                return;
+            }
+
+            maxPredictions = model.getTotalClasses();
+
+            labelContainer = document.getElementById("label-container");
+            if (!labelContainer) {
+                console.error("Label container not found");
+                return;
+            }
+
+            for (let i = 0; i < maxPredictions; i++) {
+                labelContainer.appendChild(document.createElement("div"));
+            }
+        }
+
+        // Event listener for the file input element
+        inputFile.addEventListener("change", async function (event) {
+            const file = event.target.files[0];
+            const image = document.createElement("img");
+
+            const reader = new FileReader();
+            const imageContainer = document.createElement("div");
+            imageContainer.className = "image-container";
+
+            reader.onload = async function (event) {
+                const allImg = imgArea.querySelectorAll("img");
+                allImg.forEach((item) => item.remove());
+                const imgUrl = reader.result;
+                const img = document.createElement("img");
+                img.src = imgUrl;
+                imgArea.appendChild(img);
+                imgArea.classList.add("active");
+                imgArea.dataset.img = file.name; // Use the file name instead of the image name
+
+                image.src = event.target.result;
+                image.onload = async function () {
+                    console.log("Image loaded:", image.src);
+                    await predict(image); // Use the await keyword when calling predict
+                };
+            };
+
+            reader.readAsDataURL(file); // Use the file object instead of the image object
+        });
+
+        // Event listener for the select image button
+        selectImage.addEventListener("click", function () {
+            inputFile.click();
+        });
+
+        // Function to make predictions on the image
+        async function predict(image) {
+            if (!model) {
+                console.error("Model not loaded");
+                return;
+            }
+
+            const prediction = await model.predict(image);
+            console.log("Prediction:", prediction);
+
+            if (!labelContainer) {
+                console.error("Label container not found");
+                return;
+            }
+
+            // for (let i = 0; i < maxPredictions; i++) {
+            //   const classPrediction =
+            //     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            //   labelContainer.childNodes[i].innerHTML = classPrediction;
+            // }
+
+            const messages = {
+                Yes: "Brain Tumor Detected",
+                No: "Brain Tumor not detected",
+            };
+
+            for (let i = 0; i < maxPredictions; i++) {
+                const classPrediction =
+                    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+                if (prediction[i].probability > 0.5) {
+                    const message = messages[prediction[i].className];
+                    labelContainer.childNodes[i].innerHTML = message;
+                } else {
+                    labelContainer.childNodes[i].innerHTML = "";
+                }
+            }
+        }
+
+        init();
+
+    </script>
+
+
+</body>
+
+</html>

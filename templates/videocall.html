@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jansevak</title>
+    <link rel="icon" href="./static/images/heart-pulse-solid.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <a href="{{url_for('index')}}" class="logo"><i class="fas fa-heartbeat"></i> jansevak</a>
+        <nav class="navbar">
+            {% if username %}
+            <a href="{{url_for('index')}}#home">Home</a>
+            <a href="{{url_for('index')}}#services">services</a>
+            <a href="{{url_for('index')}}#book">Book</a>
+            <a href="{{url_for('index')}}#scans">Scans</a>
+            <a href="{{url_for('index')}}#blogs">Blogs</a>
+            <a href="{{url_for('index')}}#about">about</a>
+            <a href="{{url_for('profile')}}"><span class="fas fa-user"></span></a>
+            {% else %}
+            <a href="{{url_for('login')}}">Login</a>
+            {% endif %}
+        </nav>
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+    </header>
+    <div id="root"></div>
+    <section class="footer" style="margin-top: -12.2rem;">
+        <div class="credit">made with 💚 | Jansevak @ 2023</div>
+    </section>
+    <script src="./static/js/script.js"></script>
+    <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+    <script>
+        window.onload = function () {
+            function getUrlParams(url) {
+                let urlStr = url.split('?')[1];
+                const urlSearchParams = new URLSearchParams(urlStr);
+                const result = Object.fromEntries(urlSearchParams.entries());
+                return result;
+            }
+
+
+            // Generate a Token by calling a method.
+            // @param 1: appID
+            // @param 2: serverSecret
+            // @param 3: Room ID
+            // @param 4: User ID
+            // @param 5: Username
+            const roomID = getUrlParams(window.location.href)['roomID'] || (Math.floor(Math.random() * 10000) + "");
+            const userID = Math.floor(Math.random() * 10000) + "";
+            var user = "{{ username }}";
+            // const userName = "username" + userID;
+            const userName = user
+            const appID = 979539649;
+            const serverSecret = "67a27c26e8f4d6f932730a12a02d8756";
+            const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, userID, userName);
+
+
+            const zp = ZegoUIKitPrebuilt.create(kitToken);
+            zp.joinRoom({
+                container: document.querySelector("#root"),
+                sharedLinks: [{
+                    name: 'Personal link',
+                    url: window.location.protocol + '//' + window.location.host + window.location.pathname + '?roomID=' + roomID,
+                }],
+                scenario: {
+                    mode: ZegoUIKitPrebuilt.VideoConference,
+                },
+
+                turnOnMicrophoneWhenJoining: true,
+                turnOnCameraWhenJoining: true,
+                showMyCameraToggleButton: true,
+                showMyMicrophoneToggleButton: true,
+                showAudioVideoSettingsButton: true,
+                showScreenSharingButton: true,
+                showTextChat: true,
+                showUserList: true,
+                maxUsers: 2,
+                layout: "Auto",
+                showLayoutButton: false,
+
+            });
+        }
+    </script>
+</body>
+
+
+</html>
