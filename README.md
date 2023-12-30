@@ -50,7 +50,7 @@ This project is a HealthCare Management System developed using Flask, a web fram
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/your-username/healthcare-management-system.git`
+1. Clone the repository: `git clone https://github.com/your-username/JanSevak.git`
 2. Install dependencies: `pip install -r requirements.txt`
 3. Run the application: `python app.py`
 
