@@ -15,6 +15,15 @@
 <body>
     <section class="book" id="book">
         <h1 class="heading"> <span>Don't have</span> an account ? Register</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <center>
+            <p style="color: white; font-size: 1.5rem;" class="alert alert-{{ category }}">{{ message }}</p>
+        </center>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <div class="glass-row" style="margin-top:100px;">
             <!-- <div class="image"></div> -->
             <form action="{{url_for('register')}}" method="post">
