@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, request, redirect, url_for, session
+from sqlalchemy.exc import IntegrityError
+from flask import Flask, render_template, request, redirect, url_for, session, flash, send_file
 from flask_mail import Mail, Message
 import random
 import string
@@ -15,6 +16,15 @@ import numpy as np,pandas as pd
 import os
 import csv
 from dotenv import load_dotenv
+import pdfkit
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from flask.helpers import send_file
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Image, Spacer
+from io import BytesIO
 
 app = Flask(__name__)
 mail = Mail(app)
@@ -51,6 +61,7 @@ class Appointment(db.Model):
     email = db.Column(db.String(120), nullable=False)
     type_of_doctor = db.Column(db.String(50))
     status = db.Column(db.String(20), default='Pending')
+    prescription_file = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('appointments', lazy=True))
 
@@ -66,6 +77,19 @@ def send_mail(subject, recipient, body):
     msg = Message(subject, recipients=[recipient])
     msg.body = body
     mail.send(msg)
+    
+# Set the path to the directory containing text files
+text_files_dir = os.path.join(os.path.dirname(__file__), 'static/prescriptions')
+
+# Set the path to the directory where PDFs will be saved
+pdf_output_dir = os.path.join(os.path.dirname(__file__), 'static/pdfs')
+
+# Function to convert text file to PDF
+def convert_to_pdf(file_path, output_path):
+    with open(file_path, 'r') as file:
+        content = file.read()
+
+    pdfkit.from_string(content, output_path, {'title': 'PDF Conversion', 'footer-center': '[page]/[topage]'})
     
 # ============================================================ model ============================================================ 
 
@@ -122,7 +146,7 @@ def index():
             user_appointments = user.appointments
             return render_template('patient-dashboard.html', username=username, user_appointments=user_appointments)
             
-    return render_template('index.html', username=username)
+    return render_template('index.html')
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -142,11 +166,17 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        user = User(username=username, email=email,password=password )
-        db.session.add(user)
-        db.session.commit()
-        session['user_id'] = user.id
-        return redirect(url_for('index'))
+        
+        try:
+            user = User(username=username, email=email, password=password)
+            db.session.add(user)
+            db.session.commit()
+            session['user_id'] = user.id
+            return redirect(url_for('index'))
+        except IntegrityError:
+            db.session.rollback()
+            flash('Username already exists. Please choose a different username.', 'error')
+
     return render_template('patient-register.html')
 
 @app.route('/doctor-register', methods=['GET', 'POST'])
@@ -172,6 +202,9 @@ def login():
         if user:
             session['user_id'] = user.id
             return redirect(url_for('index'))
+        else:
+            flash('Wrong username or password. Please try again.', 'error')
+
     return render_template('login.html')
 
 @app.route('/logout')
@@ -304,30 +337,159 @@ def videocall():
     
     return render_template('index.html')
 
+@app.route('/doctor-patients')
+def doctor_patients():
+    username = None
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        username = user.username
+
+        doctor = User.query.get(session['user_id'])
+
+        if not doctor.type_of_doctor:
+            return redirect(url_for('index'))
+
+        # Fetch appointments assigned to the doctor
+        appointments = Appointment.query.filter_by(type_of_doctor=doctor.type_of_doctor).all()
+        file_list = os.listdir(text_files_dir)
+
+        return render_template('doctor-patients.html', doctor=doctor, appointments=appointments,username=username,file_list=file_list)
+    return render_template('index.html')
+
+@app.route('/prescribe-medicine/<int:appointment_id>', methods=['GET', 'POST'])
+def prescribe_medicine(appointment_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    doctor = User.query.get(session['user_id'])
+    appointment = Appointment.query.get(appointment_id)
+
+    if appointment.type_of_doctor != doctor.type_of_doctor:
+        return redirect(url_for('index'))
+
+    available_medicines = ["Medicine 1", "Medicine 2", "Medicine 3"]  # Update this with your list of medicines
+
+    if request.method == 'POST':
+        selected_medicines = request.form.getlist('medicines[]')
+
+        # Create a PDF document using ReportLab
+        buffer = BytesIO()
+        pdf = SimpleDocTemplate(buffer, pagesize=letter)
+
+        # Define styles for the header and footer
+        styles = getSampleStyleSheet()
+        header_style = ParagraphStyle(
+            'Header1',
+            parent=styles['Heading1'],
+            fontName='monospace',
+            fontSize=18,
+            spaceAfter=12,
+            textColor=colors.green,
+        )
+
+        footer_style = ParagraphStyle(
+            'Footer',
+            parent=styles['Normal'],
+            fontSize=10,
+            textColor=colors.gray,
+        )
+
+        # Create content for the PDF
+        content = []
+
+        # Add Jansevak header with green color
+        jansevak_header = Paragraph("<font color='green' size='24'><b>Jansevak: We Care for Your Health</b></font>", header_style)
+        content.append(jansevak_header)
+
+        # Add space after Jansevak header
+        content.append(Spacer(1, 12))
+
+        # Add patient details
+        patient_details = (
+            f"<b>Patient Details:</b><br/>"
+            f"Name: {appointment.name}<br/>"
+            f"Age: {appointment.age}<br/>"
+            f"Blood Group: {appointment.blood_group}<br/>"
+            f"Phone Number: {appointment.phone_number}"
+        )
+        content.append(Paragraph(patient_details, styles['Normal']))
+
+        # Add space after patient details
+        content.append(Spacer(1, 12))
+
+        # Add prescribed medicines
+        prescribed_meds = "<b>Prescribed Medicines:</b><br/>"
+        for medicine in selected_medicines:
+            prescribed_meds += f"- {medicine}<br/>"
+        content.append(Paragraph(prescribed_meds, styles['Normal']))
+
+        # Add space after prescribed medicines
+        content.append(Spacer(1, 12))
+
+        # Add doctor details and footer
+        doctor_details = (
+            f"<b>Prescribed by Dr. {doctor.username} ({doctor.type_of_doctor})</b><br/>"
+            "Thank you for choosing Jansevak! We wish you good health."
+        )
+        content.append(Paragraph(doctor_details, styles['Normal']))
+
+        # Add space after doctor details
+        content.append(Spacer(1, 12))
+
+        # Build the PDF
+        pdf.build(content)
+
+        # Save the PDF to the file
+        pdf_filename = f"prescription_{appointment_id}.pdf"
+        pdf_filepath = os.path.join("static", "prescriptions", pdf_filename)
+        buffer.seek(0)
+        with open(pdf_filepath, 'wb') as pdf_file:
+            pdf_file.write(buffer.read())
+
+        buffer.close()
+
+        # Update appointment status to 'Prescribed'
+        appointment.status = 'Prescribed'
+        appointment.prescription_file = pdf_filepath
+        db.session.commit()
+
+        return redirect(url_for('doctor_patients'))
+
+    return render_template('prescribe-medicine.html', appointment=appointment, available_medicines=available_medicines)
+    
+@app.route('/view-prescription/<int:appointment_id>')
+def view_prescription(appointment_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    doctor = User.query.get(session['user_id'])
+    appointment = Appointment.query.get(appointment_id)
+
+    if appointment.type_of_doctor != doctor.type_of_doctor or appointment.status != 'Prescribed':
+        return redirect(url_for('index'))
+
+    prescription_filepath = appointment.prescription_file
+
+    return send_file(prescription_filepath, as_attachment=True)
+
+@app.route('/view-prescription-patient/<int:appointment_id>')
+def view_prescription_patient(appointment_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    user = User.query.get(session['user_id'])
+    appointment = Appointment.query.get(appointment_id)
+
+    if not user or not appointment or appointment.user_id != user.id or appointment.status != 'Prescribed':
+        return redirect(url_for('profile'))  # Change this line to redirect to the patient's profile instead of index
+
+    # Read prescription text from the file
+    prescription_filepath = appointment.prescription_file
+    
+
+    return send_file(prescription_filepath, as_attachment=True)
+
 # ============================================================ scans ============================================================ 
-
-# def allowed_file(filename):
-#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'jpg', 'jpeg', 'png'}
-
-# # Load the trained model
-# model = tf.keras.models.load_model('./static/Data/brain_tumor.h5')
-
-# def prediction(YOUR_IMAGE_PATH):
-#     img = image.load_img(YOUR_IMAGE_PATH, target_size=(150, 150))
-#     x = image.img_to_array(img)
-#     x /= 127.5
-#     x = np.expand_dims(x, axis=0)
-
-#     images = np.vstack([x])
-#     classes = model.predict(images, batch_size=10)
-#     score = tf.nn.sigmoid(classes[0])
-
-#     class_name = {0: 'No Brain Tumor', 1: 'Brain Tumor'}
-
-#     if classes[0] > 0.5:
-#         return class_name[1], 100 * np.max(score)
-#     else:
-#         return class_name[0], 100 * np.max(score)
     
 @app.route('/braintumor', methods=['GET', 'POST'])
 def braintumor():
