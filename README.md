@@ -48,6 +48,10 @@ This project is a HealthCare Management System developed using Flask, a web fram
 - **database.db:** SQLite database file storing user and appointment information.
 - **Data:** Contains CSV files used for training and testing the disease prediction model.
 
+## Architectural Diagram
+![JanSevak - Architectural Diagram](https://github.com/deepraj21/JanSevak/assets/106394426/91af5902-6ed5-4817-887b-ff89fcdcba86)
+
+
 ## Getting Started
 
 1. Clone the repository: `git clone https://github.com/your-username/JanSevak.git`
