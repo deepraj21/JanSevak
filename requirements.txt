@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+plotly
+numpy
+tensorflow
+scikit-learn
+pandas

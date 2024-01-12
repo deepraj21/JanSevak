@@ -308,10 +308,10 @@ def videocall():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'jpg', 'jpeg', 'png'}
 
-# Load the trained model
-model = tf.keras.models.load_model('./static/Data/brain_tumor.h5')
+    # Load the trained model
+    model = tf.keras.models.load_model('./static/Data/brain_tumor.h5')
 
-# def prediction(YOUR_IMAGE_PATH):
+    # def prediction(YOUR_IMAGE_PATH):
     img = image.load_img(YOUR_IMAGE_PATH, target_size=(150, 150))
     x = image.img_to_array(img)
     x /= 127.5
