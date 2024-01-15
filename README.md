@@ -49,10 +49,18 @@ Jan Sevak is a web application developed using Flask, a web framework in Python 
 - **Data:** Contains CSV files used for training and testing the disease prediction model.
 
 ## Workflow Explanation
-<a href="https://www.youtube.com/embed/wX9lr-9DiIs?si=Ge4Ajj-IaOTx5qqL" target="_blank">
- <img src="https://github.com/deepraj21/JanSevak/assets/106394426/a5e538f7-3587-4252-b271-a2386fd8082f" alt="Watch the video" width="400" height="200" border="10" />
-</a>
 
+
+
+
+https://github.com/deepraj21/JanSevak/assets/106394426/80da0f97-b0d8-436d-8191-59011eeb72da
+
+
+
+https://github.com/deepraj21/JanSevak/assets/106394426/b7d07d72-9642-4592-a475-fc590907abe1
+
+
+   
 ## Architectural Diagram
 ![JanSevak - Architectural Diagram](https://github.com/deepraj21/JanSevak/assets/106394426/91af5902-6ed5-4817-887b-ff89fcdcba86)
 
