@@ -51,13 +51,7 @@ Jan Sevak is a web application developed using Flask, a web framework in Python 
 ## Workflow Explanation
 
 
-
-
 https://github.com/deepraj21/JanSevak/assets/106394426/80da0f97-b0d8-436d-8191-59011eeb72da
-
-
-
-https://github.com/deepraj21/JanSevak/assets/106394426/b7d07d72-9642-4592-a475-fc590907abe1
 
 
    
