@@ -6,3 +6,7 @@ tensorflow
 scikit-learn
 pandas
 python-dotenv
+Flask-Mail
+gunicorn
+pdfkit
+reportlab
